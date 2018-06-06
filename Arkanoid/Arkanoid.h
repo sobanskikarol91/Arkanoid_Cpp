@@ -4,15 +4,20 @@
 #include "Cegla.h"
 #include "Pilka.h"
 #include "Paletka.h"
+
 using namespace std;
 using namespace sf;
 
+//teset
+#include <iostream>
+using namespace std;
 class Arkanoid
 {
 	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
 	Sprite tlo;
 	Vector2i ile_cegiel;// ilosc cegiel w wierszach i kolumnach
-	vector<Cegla> lista_cegiel;
+	vector<Cegla> aktywne_cegly;
+	vector<Cegla> zbite_cegly;
 	Paletka paletka;
 	Pilka pilka;
 
@@ -44,7 +49,7 @@ private:
 
 				Vector2f pozycja = Vector2f((odstep.x + wielkosc_tekstury.x)*x, (wielkosc_tekstury.y + odstep.y)*y);
 
-				lista_cegiel.push_back(Cegla(&cegla_textura, pozycja));
+				aktywne_cegly.push_back(Cegla(&cegla_textura, pozycja));
 			}
 		}
 	}
@@ -88,27 +93,37 @@ private:
 			// najpierw rysujemy tlo aby bylo z tylu
 			okno.draw(tlo);
 
-			// rysuj cegly
-			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
-				okno.draw(lista_cegiel[i]);
+			// rysuj tylko aktywne cegly
+			for (size_t i = 0; i <  aktywne_cegly.size(); i++)
+				okno.draw(aktywne_cegly[i]);
 
 			// sprawdzenie kolizji dlawszystkich cegiel i pilki
-			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
+			for (size_t i = 0; i < aktywne_cegly.size(); i++)
 			{
-				bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), lista_cegiel[i].pobierz_wymiary());
+				bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), aktywne_cegly[i].pobierz_wymiary());
 				if (kolizja)
 				{
-					lista_cegiel[i].Schowaj();
+					// podajemy nr cegly do zbicia
+					zbij_cegle(i);
 					pilka.odbijWPoziomie();
 				}
 			}
 
 			pilka.ruch(&okno.getSize());
 			obsluga_wejscia();
-			okno.draw(paletka);
 			okno.draw(pilka);
+			okno.draw(paletka);
 			okno.display();
 		}
+	}
+
+	void zbij_cegle(int nr)
+	{
+		// zapamietamy zbite cegielki
+		zbite_cegly.push_back(aktywne_cegly[nr]);
+		// usuwamy z listy aktywnych cegiel zbita cegle
+		cout << nr;
+		aktywne_cegly.erase(aktywne_cegly.begin() + nr);
 	}
 
 	void czas_rozgrywki()
@@ -127,5 +142,14 @@ private:
 		return obszar_pilki.intersects(obszar_celu);
 	}
 
+	bool sprawdz_wygrana()
+	{
+
+	}
+
+	bool sprawdz_przegrana()
+	{
+
+	}
 };
 
