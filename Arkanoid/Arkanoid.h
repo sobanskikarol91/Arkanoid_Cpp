@@ -11,6 +11,8 @@ using namespace sf;
 //teset
 #include <iostream>
 using namespace std;
+
+enum STAN { WYBICIE, GRA, PRZEGRANA, RESTART };
 class Arkanoid
 {
 	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
@@ -20,6 +22,7 @@ class Arkanoid
 	vector<Cegla> zbite_cegly;
 	Paletka paletka;
 	Pilka pilka;
+	STAN stan;
 
 public:
 	Arkanoid() {}
@@ -27,6 +30,7 @@ public:
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
 	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc) : ile_cegiel(ile_cegiel)
 	{
+		stan = STAN::GRA;
 		stworz_pilke(predkosc);
 		stworz_tlo();
 		stworz_paletke();
@@ -37,7 +41,7 @@ public:
 private:
 	void stworz_cegly(Vector2f odstep)
 	{
-		cegla_textura.loadFromFile("images/block01.png");
+		cegla_textura.loadFromFile("images/block02.png");
 
 		Vector2u wielkosc_tekstury = cegla_textura.getSize();
 		// tworzymy cegly w rzedach i kolumnach
@@ -63,7 +67,7 @@ private:
 	void stworz_paletke()
 	{
 		paletka_tekstura.loadFromFile("images/paddle.png");
-		paletka = Paletka(&paletka_tekstura, Vector2f(300, 440));
+		paletka = Paletka(&paletka_tekstura, Vector2f(250, 440));
 	}
 
 	void stworz_pilke(Vector2f predkosc)
@@ -74,7 +78,7 @@ private:
 
 	void stworz_okno()
 	{
-		RenderWindow okno(VideoMode(520, 450), "Arkanoid!");
+		RenderWindow okno(VideoMode(512, 512), "Arkanoid!");
 
 		// wykonuj dopoki okno jest otwarte
 		while (okno.isOpen())
@@ -94,23 +98,10 @@ private:
 			okno.draw(tlo);
 
 			// rysuj tylko aktywne cegly
-			for (size_t i = 0; i <  aktywne_cegly.size(); i++)
+			for (size_t i = 0; i < aktywne_cegly.size(); i++)
 				okno.draw(aktywne_cegly[i]);
 
-			// sprawdzenie kolizji dlawszystkich cegiel i pilki
-			for (size_t i = 0; i < aktywne_cegly.size(); i++)
-			{
-				bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), aktywne_cegly[i].pobierz_wymiary());
-				if (kolizja)
-				{
-					// podajemy nr cegly do zbicia
-					zbij_cegle(i);
-					pilka.odbijWPoziomie();
-				}
-			}
-
-			pilka.ruch(&okno.getSize());
-			obsluga_wejscia();
+			maszyna_stanow(okno);
 			okno.draw(pilka);
 			okno.draw(paletka);
 			okno.display();
@@ -128,6 +119,7 @@ private:
 
 	void czas_rozgrywki()
 	{
+
 	}
 
 	void obsluga_wejscia()
@@ -147,9 +139,70 @@ private:
 
 	}
 
-	bool sprawdz_przegrana()
+	void sprawdz_przegrana()
+	{
+		if (pilka.pobierz_pozycje().y > 500)
+		{
+			cout << "smierc" << endl;
+			//stan = STAN::PRZEGRANA;
+		}
+	}
+
+	void sprawdz_kolizje_cegiel()
+	{
+		// sprawdzenie kolizji dlawszystkich cegiel i pilki
+		for (size_t i = 0; i < aktywne_cegly.size(); i++)
+		{
+			bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), aktywne_cegly[i].pobierz_wymiary());
+			if (kolizja)
+			{
+				// podajemy nr cegly do zbicia
+				zbij_cegle(i);
+				pilka.odbijWPoziomie();
+			}
+		}
+	}
+
+	void sprawdz_kolizje_paletki()
+	{
+		bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), paletka.pobierz_wymiary());
+
+		if (kolizja)
+			pilka.odbijWPoziomie();
+	}
+
+	void Gra(RenderWindow & okno)
+	{
+		pilka.ruch(&okno.getSize());
+		obsluga_wejscia();
+		sprawdz_przegrana();
+		sprawdz_kolizje_cegiel();
+		sprawdz_kolizje_paletki();
+
+	}
+
+	void Wybicie(RenderWindow & okno)
 	{
 
+	}
+
+	// Maszyna Stanow
+	void maszyna_stanow(RenderWindow & okno)
+	{
+		switch (stan)
+		{
+		case GRA:
+			Gra(okno);
+			break;
+		case WYBICIE:
+			Wybicie(okno);
+			break;
+		case PRZEGRANA:
+			
+			break;
+		default:
+			break;
+		}
 	}
 };
 
