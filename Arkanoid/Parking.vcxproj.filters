@@ -30,6 +30,9 @@
     <ClCompile Include="Paletka.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Obrazek.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arkanoid.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Paletka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Obrazek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,8 +89,19 @@ private:
 			okno.draw(tlo);
 
 			// rysuj cegly
-			//for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
-			//	okno.draw(lista_cegiel[i]);
+			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
+				okno.draw(lista_cegiel[i]);
+
+			// sprawdzenie kolizji dlawszystkich cegiel i pilki
+			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
+			{
+				bool kolizja = sprawdz_kolizje(pilka.pobierz_wymiary(), lista_cegiel[i].pobierz_wymiary());
+				if (kolizja)
+				{
+					lista_cegiel[i].Schowaj();
+					pilka.odbijWPoziomie();
+				}
+			}
 
 			pilka.ruch(&okno.getSize());
 			obsluga_wejscia();
@@ -108,6 +119,12 @@ private:
 	{
 		if (Keyboard::isKeyPressed(Keyboard::Right)) paletka.ruch(Vector2f(0.1, 0));
 		if (Keyboard::isKeyPressed(Keyboard::Left)) paletka.ruch(Vector2f(-0.1, 0));
+	}
+
+	// spradzamy czy pilka nachodzi na cegielke i zwracamy prawde albo falsz, 
+	bool sprawdz_kolizje(FloatRect obszar_pilki, FloatRect obszar_celu)
+	{
+		return obszar_pilki.intersects(obszar_celu);
 	}
 
 };

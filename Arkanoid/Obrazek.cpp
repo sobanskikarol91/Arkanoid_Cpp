@@ -1,0 +1,2 @@
+#include "Obrazek.h"
+

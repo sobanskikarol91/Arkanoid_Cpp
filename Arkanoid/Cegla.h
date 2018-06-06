@@ -1,22 +1,13 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-using namespace sf;
+#include "Obrazek.h"
 
-class Cegla : public Drawable	
+class Cegla : public Obrazek
 {
-	Sprite sprite;
-
 public:
 	// posylamy wskaznik do tekstury  konstruktorowi, ktory inicjalizuje ja w "sprajcie" oraz pozycje
-	Cegla(Texture * tekstura, Vector2f pozycja) : sprite(*tekstura) 
+	Cegla(Texture * tekstura, Vector2f pozycja) : Obrazek(tekstura)
 	{
 		sprite.setPosition(pozycja);
 	};	
-
-	// opisuje jak ma byc rysowany obiekt. Musi byc zaimplementowane z Interfejsu Drawable
-	virtual void draw(RenderTarget & target, RenderStates states) const override
-	{
-		target.draw(sprite);
-	}
 };
 
