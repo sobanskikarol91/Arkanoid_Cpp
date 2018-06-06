@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-class Cegla
+class Cegla : public Drawable	
 {
 	Sprite sprite;
 
@@ -12,5 +12,11 @@ public:
 	{
 		sprite.setPosition(pozycja);
 	};	
+
+	// opisuje jak ma byc rysowany obiekt. Musi byc zaimplementowane z Interfejsu Drawable
+	virtual void draw(RenderTarget & target, RenderStates states) const override
+	{
+		target.draw(sprite);
+	}
 };
 

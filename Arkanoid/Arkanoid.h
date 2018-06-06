@@ -9,7 +9,7 @@ using namespace sf;
 
 class Arkanoid
 {
-	Texture tlo_tex, paletka_tex, cegla_tex, tlo_tex, pilka_tex;
+	Sprite tlo;
 	int cegiel_w_rzedzie, cegiel_w_kolumnie; // ilosc cegiel w wierszach i kolumnach
 	vector<Cegla> lista_cegiel;
 	Paletka paletka;
@@ -43,29 +43,47 @@ public:
 
 	void stworz_tlo()
 	{
-		tlo_tex.loadFromFile("images/background.jpg");
+		Texture tekstura;
+		tekstura.loadFromFile("images/background.jpg");
 	}
 
 	void stworz_paletke()
 	{
+		Texture paletka_tex;
 		paletka_tex.loadFromFile("images/paddle.png");
 		paletka = Paletka(&paletka_tex, Vector2f(300, 440));
 	}
 
 	void stworz_pilke(float szybkosc)
 	{
+		Texture pilka_tex;
 		pilka_tex.loadFromFile("images/ball.png");
-		pilka = Pilka(szybkosc);
+		pilka = Pilka(pilka_tex,Vector2f(300,300),10);
 	}
 
 	void utworz_okno()
 	{
 		RenderWindow okno(VideoMode(520, 450), "Arkanoid!");
 
-		// wykonuj dopki uzytkownik nie zamknie okna
+		// wykonuj dopki  okno jest otwarte
 		while (okno.isOpen())
 		{
+			Event event;
 
+			while (okno.pollEvent(event))
+			{
+				// gdy uzytkownik nacisnie zamkniecie okna to je zamknij
+				if (event.type == Event::Closed)
+					okno.close();
+			}
+
+			// rysuj obiekty
+			for (size_t i = 0; i < cegiel_w_rzedzie*cegiel_w_kolumnie; i++)
+				okno.draw(lista_cegiel[i]);
+
+			okno.draw(paletka);
+			okno.draw(pilka);
+			okno.draw(tlo);
 		}
 	}
 
@@ -73,5 +91,6 @@ public:
 	{
 
 	}
+
 };
 
