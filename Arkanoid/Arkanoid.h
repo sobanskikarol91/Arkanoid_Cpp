@@ -14,15 +14,15 @@ class Arkanoid
 	Vector2i ile_cegiel;// ilosc cegiel w wierszach i kolumnach
 	vector<Cegla> lista_cegiel;
 	Paletka paletka;
-	Pilka pilka;	
+	Pilka pilka;
 
 public:
 	Arkanoid() {}
 
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
-	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, float szybkosc) : ile_cegiel(ile_cegiel)
+	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc) : ile_cegiel(ile_cegiel)
 	{
-		stworz_pilke(szybkosc);
+		stworz_pilke(predkosc);
 		stworz_tlo();
 		stworz_paletke();
 		stworz_cegly(odstep_cegiel);
@@ -42,7 +42,7 @@ private:
 			{
 				// dodajemy do listy cegle ustawiajac jej teksture i pozycje i odstep miedzy ceglami
 
-				Vector2f pozycja = Vector2f((odstep.x+ wielkosc_tekstury.x)*x, (wielkosc_tekstury.y + odstep.y)*y);
+				Vector2f pozycja = Vector2f((odstep.x + wielkosc_tekstury.x)*x, (wielkosc_tekstury.y + odstep.y)*y);
 
 				lista_cegiel.push_back(Cegla(&cegla_textura, pozycja));
 			}
@@ -61,10 +61,10 @@ private:
 		paletka = Paletka(&paletka_tekstura, Vector2f(300, 440));
 	}
 
-	void stworz_pilke(float szybkosc)
+	void stworz_pilke(Vector2f predkosc)
 	{
-	pilka_textura.loadFromFile("images/ball.png");
-		pilka = Pilka(&pilka_textura,Vector2f(300,300),10);
+		pilka_textura.loadFromFile("images/ball.png");
+		pilka = Pilka(&pilka_textura, Vector2f(300, 300), predkosc);
 	}
 
 	void stworz_okno()
@@ -89,9 +89,11 @@ private:
 			okno.draw(tlo);
 
 			// rysuj cegly
-			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
-				okno.draw(lista_cegiel[i]);
+			//for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
+			//	okno.draw(lista_cegiel[i]);
 
+			pilka.ruch(&okno.getSize());
+			obsluga_wejscia();
 			okno.draw(paletka);
 			okno.draw(pilka);
 			okno.display();
@@ -100,6 +102,12 @@ private:
 
 	void czas_rozgrywki()
 	{
+	}
+
+	void obsluga_wejscia()
+	{
+		if (Keyboard::isKeyPressed(Keyboard::Right)) paletka.ruch(Vector2f(0.1, 0));
+		if (Keyboard::isKeyPressed(Keyboard::Left)) paletka.ruch(Vector2f(-0.1, 0));
 	}
 
 };

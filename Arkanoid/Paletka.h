@@ -18,5 +18,11 @@ public:
 		// rysujemy sprite
 		target.draw(sprite);
 	}
+
+	void ruch(Vector2f kierunek)
+	{
+		 sprite.move(kierunek);
+		// if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds())) dy = -(rand() % 5 + 2);
+	}
 };
 
