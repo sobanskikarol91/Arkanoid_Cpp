@@ -4,7 +4,7 @@
 using namespace sf;
 
 
-int main()
+int main2()
 {
 	srand(time(0));
 
@@ -42,7 +42,7 @@ int main()
 			if (e.type == Event::Closed)
 				app.close();
 		}
-
+/*
 		x += dx;
 		for (int i = 0; i < n; i++)
 			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
@@ -66,7 +66,7 @@ int main()
 		if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds())) dy = -(rand() % 5 + 2);
 
 		sBall.setPosition(x, y);
-
+		*/
 		app.clear();
 		app.draw(sBackground);
 		app.draw(sBall);
@@ -83,6 +83,7 @@ int main()
 
 int main()
 {
+	//main2();
 	Arkanoid arkanoid(10,10,4);
 	return 0;
 }

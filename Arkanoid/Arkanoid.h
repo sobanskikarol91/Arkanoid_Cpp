@@ -9,6 +9,7 @@ using namespace sf;
 
 class Arkanoid
 {
+	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
 	Sprite tlo;
 	int cegiel_w_rzedzie, cegiel_w_kolumnie; // ilosc cegiel w wierszach i kolumnach
 	vector<Cegla> lista_cegiel;
@@ -23,11 +24,12 @@ public:
 		stworz_tlo();
 		stworz_paletke();
 		stworz_cegly();
+		stworz_okno();
 	};
 
+private:
 	void stworz_cegly()
 	{
-		Texture cegla_textura;
 		cegla_textura.loadFromFile("images/block01.png");
 
 		// tworzymy cegly w rzedach i kolumnach
@@ -43,29 +45,27 @@ public:
 
 	void stworz_tlo()
 	{
-		Texture tekstura;
-		tekstura.loadFromFile("images/background.jpg");
+		tlo_textura.loadFromFile("images/background.jpg");
+		tlo.setTexture(tlo_textura);
 	}
 
 	void stworz_paletke()
 	{
-		Texture paletka_tex;
-		paletka_tex.loadFromFile("images/paddle.png");
-		paletka = Paletka(&paletka_tex, Vector2f(300, 440));
+		paletka_tekstura.loadFromFile("images/paddle.png");
+		paletka = Paletka(&paletka_tekstura, Vector2f(300, 440));
 	}
 
 	void stworz_pilke(float szybkosc)
 	{
-		Texture pilka_tex;
-		pilka_tex.loadFromFile("images/ball.png");
-		pilka = Pilka(pilka_tex,Vector2f(300,300),10);
+	pilka_textura.loadFromFile("images/ball.png");
+		pilka = Pilka(&pilka_textura,Vector2f(300,300),10);
 	}
 
-	void utworz_okno()
+	void stworz_okno()
 	{
 		RenderWindow okno(VideoMode(520, 450), "Arkanoid!");
 
-		// wykonuj dopki  okno jest otwarte
+		// wykonuj dopoki okno jest otwarte
 		while (okno.isOpen())
 		{
 			Event event;
@@ -77,19 +77,22 @@ public:
 					okno.close();
 			}
 
-			// rysuj obiekty
-			for (size_t i = 0; i < cegiel_w_rzedzie*cegiel_w_kolumnie; i++)
-				okno.draw(lista_cegiel[i]);
+			okno.clear(); // odswiezamy ekran
 
-			okno.draw(paletka);
-			okno.draw(pilka);
+			// rysuj obiekty
+			//for (size_t i = 0; i < cegiel_w_rzedzie*cegiel_w_kolumnie; i++)
+			//	okno.draw(lista_cegiel[i]);
+
+
+			//okno.draw(paletka);
+			//okno.draw(pilka);
 			okno.draw(tlo);
+			okno.display();
 		}
 	}
 
 	void czas_rozgrywki()
 	{
-
 	}
 
 };
