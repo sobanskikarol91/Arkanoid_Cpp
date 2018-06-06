@@ -42,31 +42,31 @@ int main2()
 			if (e.type == Event::Closed)
 				app.close();
 		}
-/*
-		x += dx;
-		for (int i = 0; i < n; i++)
-			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
-			{
-				block[i].setPosition(-100, 0); dx = -dx;
-			}
+		/*
+				x += dx;
+				for (int i = 0; i < n; i++)
+					if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
+					{
+						block[i].setPosition(-100, 0); dx = -dx;
+					}
 
-		y += dy;
-		for (int i = 0; i < n; i++)
-			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
-			{
-				block[i].setPosition(-100, 0); dy = -dy;
-			}
+				y += dy;
+				for (int i = 0; i < n; i++)
+					if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
+					{
+						block[i].setPosition(-100, 0); dy = -dy;
+					}
 
-		if (x < 0 || x>520)  dx = -dx;
-		if (y < 0 || y>450)  dy = -dy;
+				if (x < 0 || x>520)  dx = -dx;
+				if (y < 0 || y>450)  dy = -dy;
 
-		if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6, 0);
-		if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6, 0);
+				if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6, 0);
+				if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6, 0);
 
-		if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds())) dy = -(rand() % 5 + 2);
+				if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds())) dy = -(rand() % 5 + 2);
 
-		sBall.setPosition(x, y);
-		*/
+				sBall.setPosition(x, y);
+				*/
 		app.clear();
 		app.draw(sBackground);
 		app.draw(sBall);
@@ -84,6 +84,6 @@ int main2()
 int main()
 {
 	//main2();
-	Arkanoid arkanoid(10,10,4);
+	Arkanoid arkanoid(Vector2i(10, 10), Vector2f(10, 10), 5);
 	return 0;
 }

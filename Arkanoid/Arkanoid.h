@@ -11,34 +11,40 @@ class Arkanoid
 {
 	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
 	Sprite tlo;
-	int cegiel_w_rzedzie, cegiel_w_kolumnie; // ilosc cegiel w wierszach i kolumnach
+	Vector2i ile_cegiel;// ilosc cegiel w wierszach i kolumnach
 	vector<Cegla> lista_cegiel;
 	Paletka paletka;
 	Pilka pilka;	
 
 public:
 	Arkanoid() {}
-	Arkanoid(int rzad_cegiel, int kolumna_cegiel, float szybkosc) : cegiel_w_rzedzie(rzad_cegiel), cegiel_w_kolumnie(kolumna_cegiel)
+
+	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
+	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, float szybkosc) : ile_cegiel(ile_cegiel)
 	{
 		stworz_pilke(szybkosc);
 		stworz_tlo();
 		stworz_paletke();
-		stworz_cegly();
+		stworz_cegly(odstep_cegiel);
 		stworz_okno();
 	};
 
 private:
-	void stworz_cegly()
+	void stworz_cegly(Vector2f odstep)
 	{
 		cegla_textura.loadFromFile("images/block01.png");
 
+		Vector2u wielkosc_tekstury = cegla_textura.getSize();
 		// tworzymy cegly w rzedach i kolumnach
-		for (size_t r = 0; r < cegiel_w_rzedzie; r++)
+		for (size_t y = 0; y < ile_cegiel.y; y++)
 		{
-			for (size_t c = 0; c < cegiel_w_kolumnie; c++)
+			for (size_t x = 0; x < ile_cegiel.x; x++)
 			{
-				// dodajemy do listy cegle ustawiajac jej teksture
-				lista_cegiel.push_back(Cegla(&cegla_textura, Vector2f(cegiel_w_rzedzie, cegiel_w_kolumnie)));
+				// dodajemy do listy cegle ustawiajac jej teksture i pozycje i odstep miedzy ceglami
+
+				Vector2f pozycja = Vector2f((odstep.x+ wielkosc_tekstury.x)*x, (wielkosc_tekstury.y + odstep.y)*y);
+
+				lista_cegiel.push_back(Cegla(&cegla_textura, pozycja));
 			}
 		}
 	}
@@ -79,14 +85,15 @@ private:
 
 			okno.clear(); // odswiezamy ekran
 
-			// rysuj obiekty
-			//for (size_t i = 0; i < cegiel_w_rzedzie*cegiel_w_kolumnie; i++)
-			//	okno.draw(lista_cegiel[i]);
-
-
-			//okno.draw(paletka);
-			//okno.draw(pilka);
+			// najpierw rysujemy tlo aby bylo z tylu
 			okno.draw(tlo);
+
+			// rysuj cegly
+			for (size_t i = 0; i < ile_cegiel.x*ile_cegiel.y; i++)
+				okno.draw(lista_cegiel[i]);
+
+			okno.draw(paletka);
+			okno.draw(pilka);
 			okno.display();
 		}
 	}
