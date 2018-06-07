@@ -2,7 +2,7 @@
 class Przycisk
 {
 public:
-	Przycisk();
-	~Przycisk();
+	Przycisk() {};
+	~Przycisk() {};
 };
 

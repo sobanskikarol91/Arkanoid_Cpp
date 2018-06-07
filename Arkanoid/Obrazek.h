@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 using namespace sf;
 
 // klasa ktora przechowuje Sprite jako pole, cegla paletka i pilka beda dziedziczyc po tej klasie

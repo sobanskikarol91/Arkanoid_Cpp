@@ -36,6 +36,12 @@
     <ClCompile Include="Przycisk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Dzwiek.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Punkty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arkanoid.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Przycisk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dzwiek.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Punkty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

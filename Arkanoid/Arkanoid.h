@@ -4,6 +4,8 @@
 #include "Cegla.h"
 #include "Pilka.h"
 #include "Paletka.h"
+#include <SFML/Audio.hpp>
+#include "Punkty.h"
 
 using namespace std;
 using namespace sf;
@@ -11,12 +13,14 @@ using namespace sf;
 //teset
 #include <iostream>
 using namespace std;
-
 enum STAN { WYBICIE, GRA, PRZEGRANA, RESTART };
 class Arkanoid
 {
 	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
 	Sprite tlo;
+	Punkty punkty;
+
+	Font czcionka;
 	Vector2i ile_cegiel;// ilosc cegiel w wierszach i kolumnach
 	vector<Cegla> aktywne_cegly;
 	vector<Cegla> zbite_cegly;
@@ -28,17 +32,27 @@ public:
 	Arkanoid() {}
 
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
-	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc) : ile_cegiel(ile_cegiel)
+	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc) : ile_cegiel(ile_cegiel), punkty(Vector2f(10,10), &czcionka)
 	{
+		
 		stan = STAN::GRA;
 		stworz_pilke(predkosc);
 		stworz_tlo();
 		stworz_paletke();
 		stworz_cegly(odstep_cegiel);
+		wczytaj_czcionke();
+
+		// petla okna
 		stworz_okno();
 	};
 
 private:
+
+	void wczytaj_czcionke()
+	{
+		czcionka.loadFromFile("czcionka/arial.ttf");
+	}
+
 	void stworz_cegly(Vector2f odstep)
 	{
 		cegla_textura.loadFromFile("images/block02.png");
@@ -72,6 +86,7 @@ private:
 
 	void stworz_pilke(Vector2f predkosc)
 	{
+		////pilka_dzwiek.loadFromFile("sounds/ball.wav");
 		pilka_textura.loadFromFile("images/ball.png");
 		pilka = Pilka(&pilka_textura, Vector2f(300, 300), predkosc);
 	}
@@ -98,12 +113,13 @@ private:
 			okno.draw(tlo);
 
 			// rysuj tylko aktywne cegly
-			for (size_t i = 0; i < aktywne_cegly.size(); i++)
-				okno.draw(aktywne_cegly[i]);
+		//	for (size_t i = 0; i < aktywne_cegly.size(); i++)
+		//		okno.draw(aktywne_cegly[i]);
 
 			maszyna_stanow(okno);
 			okno.draw(pilka);
 			okno.draw(paletka);
+			okno.draw(punkty);
 			okno.display();
 		}
 	}
@@ -113,7 +129,6 @@ private:
 		// zapamietamy zbite cegielki
 		zbite_cegly.push_back(aktywne_cegly[nr]);
 		// usuwamy z listy aktywnych cegiel zbita cegle
-		cout << nr;
 		aktywne_cegly.erase(aktywne_cegly.begin() + nr);
 	}
 
@@ -159,6 +174,7 @@ private:
 				// podajemy nr cegly do zbicia
 				zbij_cegle(i);
 				pilka.odbijWPoziomie();
+				dodaj_punkt();
 			}
 		}
 	}
@@ -171,17 +187,16 @@ private:
 			pilka.odbijWPoziomie();
 	}
 
-	void Gra(RenderWindow & okno)
+	void gra(RenderWindow & okno)
 	{
 		pilka.ruch(&okno.getSize());
 		obsluga_wejscia();
 		sprawdz_przegrana();
 		sprawdz_kolizje_cegiel();
 		sprawdz_kolizje_paletki();
-
 	}
 
-	void Wybicie(RenderWindow & okno)
+	void wybicie(RenderWindow & okno)
 	{
 
 	}
@@ -192,17 +207,23 @@ private:
 		switch (stan)
 		{
 		case GRA:
-			Gra(okno);
+			gra(okno);
 			break;
 		case WYBICIE:
-			Wybicie(okno);
+			wybicie(okno);
 			break;
 		case PRZEGRANA:
-			
+
 			break;
 		default:
 			break;
 		}
+	}
+
+	void dodaj_punkt()
+	{
+		punkty++;
+
 	}
 };
 
