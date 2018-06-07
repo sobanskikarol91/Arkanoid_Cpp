@@ -2,14 +2,17 @@
 #include "Obrazek.h"
 #include <SFML/Audio.hpp>
 #include "Dzwiek.h"
-
-class Pilka :public  Obrazek
+#include "IReset.h"
+class Pilka :public  Obrazek, IReset
 {
 	Vector2f predkosc; // z jaka porusza sie pilka
 	Vector2f startowa_pozycja;
+	Vector2f startowa_predkosc;
+
 public:
 	Pilka() {}
-	Pilka(Texture * tekstura, Vector2f pozycja, Vector2f predkosc) :Obrazek(tekstura), predkosc(predkosc), startowa_pozycja(pozycja)
+	Pilka(Texture * tekstura, Vector2f pozycja, Vector2f predkosc)
+		:Obrazek(tekstura), predkosc(predkosc), startowa_pozycja(pozycja), startowa_predkosc(predkosc)
 	{
 		sprite.setPosition(pozycja);
 	};
@@ -45,6 +48,12 @@ public:
 	void odbijWPoziomie()
 	{
 		predkosc.y *= -1;
+	}
+
+	void reset() override
+	{
+		predkosc = startowa_predkosc;
+		sprite.setPosition(startowa_pozycja);
 	}
 };
 

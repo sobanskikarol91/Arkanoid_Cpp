@@ -3,7 +3,7 @@
 Przycisk::Przycisk() {};
 Przycisk::Przycisk(string nazwa, Vector2f pozycja, bool pokaz) // pokaz - czy przycisk ma byc schowany na poczatku 
 {
-	//pokaz_przycisk(pokaz);
+	pokaz_przycisk(pokaz);
 
 	domyslna_tekstura.loadFromFile("images/" + nazwa + ".png");
 	sprite.setPosition(pozycja.x, pozycja.y);

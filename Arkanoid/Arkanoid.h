@@ -35,7 +35,7 @@ public:
 
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
 	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc)
-		: ile_cegiel(ile_cegiel), punkty(Vector2f(0, 480), &czcionka), stan(STAN::WYBICIE), czas_restartu(3), restart_przycisk("Restart", Vector2f(181,206), true)
+		: ile_cegiel(ile_cegiel), punkty(Vector2f(0, 480), &czcionka), stan(STAN::WYBICIE), czas_restartu(3), restart_przycisk("Restart", Vector2f(181,206), false)
 	{
 		stworz_pilke(predkosc);
 		stworz_tlo();
@@ -158,6 +158,7 @@ private:
 		if (pilka.pobierz_pozycje().y > 480)
 		{
 			cout << "przegrania";
+			restart_przycisk.pokaz_przycisk(true);
 			stan = STAN::PRZEGRANA;
 		}
 	}
@@ -227,7 +228,12 @@ private:
 
 	void restart(RenderWindow & okno)
 	{
-		stan = STAN::GRA;
+		if (restart_przycisk.detekcja_klikniecia(&okno))
+		{
+			pilka.reset();
+			restart_przycisk.pokaz_przycisk(false);
+			stan = STAN::WYBICIE;
+		}
 	}
 };
 
