@@ -230,9 +230,19 @@ private:
 	{
 		if (restart_przycisk.detekcja_klikniecia(&okno))
 		{
+			punkty.reset();
+			paletka.reset();
 			pilka.reset();
 			restart_przycisk.pokaz_przycisk(false);
 			stan = STAN::WYBICIE;
+
+			//
+			for (size_t i = 0; i < zbite_cegly.size(); i++)
+			{
+				// dodajemy ponownie cegly do aktnywnych
+				aktywne_cegly.push_back(zbite_cegly[i]);
+			}
+			zbite_cegly.clear(); // czyscimy zbite cegly;
 		}
 	}
 };

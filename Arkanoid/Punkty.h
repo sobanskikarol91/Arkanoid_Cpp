@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "IReset.h"
 using namespace sf;
 
-class Punkty : public Drawable
+class Punkty : public Drawable, IReset
 {
 	Text tekst;
 	Vector2i pozycja;
@@ -31,6 +32,12 @@ public:
 	virtual void draw(RenderTarget & target, RenderStates states) const override
 	{
 		target.draw(tekst);
+	}
+
+	void reset() override
+	{
+		punkty = 0;
+		tekst.setString("punkty: 0");
 	}
 };
 
