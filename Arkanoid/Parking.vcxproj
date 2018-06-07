@@ -22,6 +22,7 @@
     <ClCompile Include="Arkanoid.cpp" />
     <ClCompile Include="Cegla.cpp" />
     <ClCompile Include="Dzwiek.cpp" />
+    <ClCompile Include="IReset.cpp" />
     <ClCompile Include="Obrazek.cpp" />
     <ClCompile Include="Paletka.cpp" />
     <ClCompile Include="Pilka.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Arkanoid.h" />
     <ClInclude Include="Cegla.h" />
     <ClInclude Include="Dzwiek.h" />
+    <ClInclude Include="IReset.h" />
     <ClInclude Include="Obrazek.h" />
     <ClInclude Include="Paletka.h" />
     <ClInclude Include="Pilka.h" />

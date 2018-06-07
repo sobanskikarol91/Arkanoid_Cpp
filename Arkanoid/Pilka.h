@@ -6,9 +6,10 @@
 class Pilka :public  Obrazek
 {
 	Vector2f predkosc; // z jaka porusza sie pilka
+	Vector2f startowa_pozycja;
 public:
 	Pilka() {}
-	Pilka(Texture * tekstura, Vector2f pozycja, Vector2f predkosc) :Obrazek(tekstura), predkosc(predkosc)
+	Pilka(Texture * tekstura, Vector2f pozycja, Vector2f predkosc) :Obrazek(tekstura), predkosc(predkosc), startowa_pozycja(pozycja)
 	{
 		sprite.setPosition(pozycja);
 	};

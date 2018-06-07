@@ -42,6 +42,9 @@
     <ClCompile Include="Punkty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IReset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arkanoid.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Punkty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IReset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

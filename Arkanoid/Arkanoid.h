@@ -6,14 +6,14 @@
 #include "Paletka.h"
 #include <SFML/Audio.hpp>
 #include "Punkty.h"
+#include "Przycisk.h"
 
-using namespace std;
+// teset
+#include  <iostream>
 using namespace sf;
 
-//teset
-#include <iostream>
-using namespace std;
 enum STAN { WYBICIE, GRA, PRZEGRANA, RESTART };
+
 class Arkanoid
 {
 	Texture tlo_textura, cegla_textura, pilka_textura, paletka_tekstura;
@@ -27,14 +27,16 @@ class Arkanoid
 	Paletka paletka;
 	Pilka pilka;
 	STAN stan;
+	Przycisk restart_przycisk;
+	int czas_restartu;
 
 public:
 	Arkanoid() {}
 
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
 	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc)
-		: ile_cegiel(ile_cegiel), punkty(Vector2f(10, 10), &czcionka), stan(STAN::WYBICIE)
-	{		
+		: ile_cegiel(ile_cegiel), punkty(Vector2f(0, 480), &czcionka), stan(STAN::WYBICIE), czas_restartu(3), restart_przycisk("Restart", Vector2f(181,206), true)
+	{
 		stworz_pilke(predkosc);
 		stworz_tlo();
 		stworz_paletke();
@@ -119,6 +121,9 @@ private:
 			okno.draw(pilka);
 			okno.draw(paletka);
 			okno.draw(punkty);
+			okno.draw(restart_przycisk);
+
+			// wyswietlamy okno
 			okno.display();
 		}
 	}
@@ -129,11 +134,6 @@ private:
 		zbite_cegly.push_back(aktywne_cegly[nr]);
 		// usuwamy z listy aktywnych cegiel zbita cegle
 		aktywne_cegly.erase(aktywne_cegly.begin() + nr);
-	}
-
-	void czas_rozgrywki()
-	{
-
 	}
 
 	void obsluga_wejscia()
@@ -155,10 +155,10 @@ private:
 
 	void sprawdz_przegrana()
 	{
-		if (pilka.pobierz_pozycje().y > 500)
+		if (pilka.pobierz_pozycje().y > 480)
 		{
-			cout << "smierc" << endl;
-			//stan = STAN::PRZEGRANA;
+			cout << "przegrania";
+			stan = STAN::PRZEGRANA;
 		}
 	}
 
@@ -213,7 +213,7 @@ private:
 			wybicie(okno);
 			break;
 		case PRZEGRANA:
-
+			restart(okno);
 			break;
 		default:
 			break;
@@ -223,6 +223,11 @@ private:
 	void dodaj_punkt()
 	{
 		punkty++;
+	}
+
+	void restart(RenderWindow & okno)
+	{
+		stan = STAN::GRA;
 	}
 };
 

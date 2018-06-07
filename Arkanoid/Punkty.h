@@ -13,8 +13,8 @@ public:
 	Punkty() : pozycja(Vector2f(0, 0)), punkty(0) {}
 	Punkty(Vector2f pozycja, Font * czcionka) : pozycja(pozycja), tekst("punkty: 0", *czcionka, 3), punkty(0)
 	{
-
-		tekst.setFillColor(Color::White);
+		tekst.setPosition(pozycja);
+		tekst.setFillColor(Color::Yellow);
 		tekst.setOutlineColor (Color::Black);
 		tekst.setCharacterSize(24);
 	}
