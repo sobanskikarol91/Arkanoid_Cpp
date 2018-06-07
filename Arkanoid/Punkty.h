@@ -15,7 +15,8 @@ public:
 	{
 
 		tekst.setFillColor(Color::White);
-		tekst.setCharacterSize(20);
+		tekst.setOutlineColor (Color::Black);
+		tekst.setCharacterSize(24);
 	}
 
 	// przeciazenie operatora inkrementacji

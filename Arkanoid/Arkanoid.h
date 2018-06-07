@@ -32,10 +32,9 @@ public:
 	Arkanoid() {}
 
 	// odstep_cegiel to odstep miedzy ceglami w kolumnie i wierszu
-	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc) : ile_cegiel(ile_cegiel), punkty(Vector2f(10,10), &czcionka)
-	{
-		
-		stan = STAN::GRA;
+	Arkanoid(Vector2i ile_cegiel, Vector2f odstep_cegiel, Vector2f predkosc)
+		: ile_cegiel(ile_cegiel), punkty(Vector2f(10, 10), &czcionka), stan(STAN::WYBICIE)
+	{		
 		stworz_pilke(predkosc);
 		stworz_tlo();
 		stworz_paletke();
@@ -81,14 +80,14 @@ private:
 	void stworz_paletke()
 	{
 		paletka_tekstura.loadFromFile("images/paddle.png");
-		paletka = Paletka(&paletka_tekstura, Vector2f(250, 440));
+		paletka = Paletka(&paletka_tekstura, Vector2f(220, 440));
 	}
 
 	void stworz_pilke(Vector2f predkosc)
 	{
 		////pilka_dzwiek.loadFromFile("sounds/ball.wav");
 		pilka_textura.loadFromFile("images/ball.png");
-		pilka = Pilka(&pilka_textura, Vector2f(300, 300), predkosc);
+		pilka = Pilka(&pilka_textura, Vector2f(255, 420), predkosc);
 	}
 
 	void stworz_okno()
@@ -113,8 +112,8 @@ private:
 			okno.draw(tlo);
 
 			// rysuj tylko aktywne cegly
-		//	for (size_t i = 0; i < aktywne_cegly.size(); i++)
-		//		okno.draw(aktywne_cegly[i]);
+			for (size_t i = 0; i < aktywne_cegly.size(); i++)
+				okno.draw(aktywne_cegly[i]);
 
 			maszyna_stanow(okno);
 			okno.draw(pilka);
@@ -198,7 +197,8 @@ private:
 
 	void wybicie(RenderWindow & okno)
 	{
-
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+			stan = STAN::GRA;
 	}
 
 	// Maszyna Stanow
@@ -223,7 +223,6 @@ private:
 	void dodaj_punkt()
 	{
 		punkty++;
-
 	}
 };
 
