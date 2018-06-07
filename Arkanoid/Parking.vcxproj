@@ -24,6 +24,7 @@
     <ClCompile Include="Obrazek.cpp" />
     <ClCompile Include="Paletka.cpp" />
     <ClCompile Include="Pilka.cpp" />
+    <ClCompile Include="Przycisk.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +33,7 @@
     <ClInclude Include="Obrazek.h" />
     <ClInclude Include="Paletka.h" />
     <ClInclude Include="Pilka.h" />
+    <ClInclude Include="Przycisk.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
