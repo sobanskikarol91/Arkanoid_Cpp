@@ -8,25 +8,14 @@ class Obrazek : public Drawable
 {
 protected:
 	Sprite sprite;
-	Obrazek() {}
-	Obrazek(Texture * tekstura) : sprite(*tekstura) {}
+	Obrazek();
+	Obrazek(Texture * tekstura);
 
 public:
 	// przyda sie do sprawdzenia kolizji
-	FloatRect pobierz_wymiary()
-	{
-		return sprite.getGlobalBounds();
-	}
-
-	Vector2f pobierz_pozycje()
-	{
-		return sprite.getPosition();
-	}
-
+	FloatRect pobierz_wymiary();
+	Vector2f pobierz_pozycje();
 	// opisuje jak ma byc rysowany obiekt. Musi byc zaimplementowane z Interfejsu Drawable
-	virtual void draw(RenderTarget & target, RenderStates states) const override
-	{
-		target.draw(sprite);
-	}
+	virtual void draw(RenderTarget & target, RenderStates states) const override;
 };
 

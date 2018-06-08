@@ -9,7 +9,7 @@ class Paletka : public Obrazek, IReset
 public:
 	Paletka();
 	Paletka(Texture * tekstura, Vector2f pozycja);
-	void ruch(Vector2f kierunek);
+	void ruch(Vector2f kierunek, Vector2u  granica); // granica gdize moze sie poruszac paletka wielkosc ekranu 
 	void reset() override;
 };
 

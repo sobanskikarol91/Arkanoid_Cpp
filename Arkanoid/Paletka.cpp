@@ -7,12 +7,19 @@ Paletka::Paletka(Texture * tekstura, Vector2f pozycja) : Obrazek(tekstura), star
 	sprite.setPosition(pozycja);
 }
 
-void Paletka::ruch(Vector2f kierunek)
+void Paletka::ruch(Vector2f kierunek, Vector2u  granica)
 {
-	sprite.move(kierunek);
+	// sprawdzamy czy paletka nei wyszla za ekran z lewej i prawej strony
+	if (pobierz_pozycje().x < granica.x)
+		sprite.setPosition(Vector2f(granica.x, pobierz_pozycje().y));
+	else if (pobierz_pozycje().x > granica.y)
+		sprite.setPosition(Vector2f(granica.y, pobierz_pozycje().y));
+	else
+		sprite.move(kierunek);
+
 }
 
-void Paletka::reset() 
+void Paletka::reset()
 {
 	sprite.setPosition(startowa_pozycja);
 }

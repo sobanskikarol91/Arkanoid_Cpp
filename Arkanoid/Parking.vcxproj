@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="Arkanoid.cpp" />
     <ClCompile Include="Cegla.cpp" />
-    <ClCompile Include="IReset.cpp" />
     <ClCompile Include="Obrazek.cpp" />
     <ClCompile Include="Paletka.cpp" />
     <ClCompile Include="Pilka.cpp" />

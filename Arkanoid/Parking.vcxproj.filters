@@ -39,9 +39,6 @@
     <ClCompile Include="Punkty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IReset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arkanoid.h">
