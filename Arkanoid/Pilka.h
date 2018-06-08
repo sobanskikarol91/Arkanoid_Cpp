@@ -1,7 +1,6 @@
 #pragma once
 #include "Obrazek.h"
 #include <SFML/Audio.hpp>
-#include "Dzwiek.h"
 #include "IReset.h"
 class Pilka :public  Obrazek, IReset
 {

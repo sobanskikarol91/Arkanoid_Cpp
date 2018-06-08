@@ -8,11 +8,8 @@
 #include "Punkty.h"
 #include "Przycisk.h"
 
-// teset
-#include  <iostream>
-using namespace sf;
 
-enum STAN { WYBICIE, GRA, PRZEGRANA, RESTART };
+enum STAN { WYBICIE, GRA, PRZEGRANA, RESTART, WYGRANA };
 
 class Arkanoid
 {
@@ -148,16 +145,19 @@ private:
 		return obszar_pilki.intersects(obszar_celu);
 	}
 
-	bool sprawdz_wygrana()
+	void sprawdz_wygrana()
 	{
-
+		if (aktywne_cegly.size() == 0)
+		{
+			restart_przycisk.pokaz_przycisk(true);
+			stan = STAN::WYGRANA;
+		}
 	}
 
 	void sprawdz_przegrana()
 	{
 		if (pilka.pobierz_pozycje().y > 480)
 		{
-			cout << "przegrania";
 			restart_przycisk.pokaz_przycisk(true);
 			stan = STAN::PRZEGRANA;
 		}
@@ -175,6 +175,8 @@ private:
 				zbij_cegle(i);
 				pilka.odbijWPoziomie();
 				dodaj_punkt();
+				// sprawdzamy warunek wygranej
+				sprawdz_wygrana();
 			}
 		}
 	}
@@ -216,6 +218,9 @@ private:
 		case PRZEGRANA:
 			restart(okno);
 			break;
+		case WYGRANA:
+			restart(okno);
+			break;
 		default:
 			break;
 		}
@@ -236,7 +241,6 @@ private:
 			restart_przycisk.pokaz_przycisk(false);
 			stan = STAN::WYBICIE;
 
-			//
 			for (size_t i = 0; i < zbite_cegly.size(); i++)
 			{
 				// dodajemy ponownie cegly do aktnywnych
